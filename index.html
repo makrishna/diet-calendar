@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.1.0/fullcalendar.print.min.css' rel='stylesheet' media='print' />
+    <link href='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.1.0/fullcalendar.min.css' rel='stylesheet' />
+    <link href='https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.7/semantic.min.css' rel='stylesheet' />
+    
+    <style>
+        
+  .checkbox-wrapper-26 * {
+    -webkit-tap-highlight-color: transparent;
+    outline: none;
+  }
+
+  .checkbox-wrapper-26 input[type="checkbox"] {
+    display: none;
+  }
+
+  .checkbox-wrapper-26 label {
+    --size: 50px;
+    --shadow: calc(var(--size) * .07) calc(var(--size) * .1);
+
+    position: relative;
+    display: block;
+    width: var(--size);
+    height: var(--size);
+    margin: 0 auto;
+    background-color: #f72414;
+    border-radius: 50%;
+    box-shadow: 0 var(--shadow) #ffbeb8;
+    cursor: pointer;
+    transition: 0.2s ease transform, 0.2s ease background-color,
+      0.2s ease box-shadow;
+    overflow: hidden;
+    z-index: 1;
+  }
+
+  .checkbox-wrapper-26 label:before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    right: 0;
+    left: 0;
+    width: calc(var(--size) * .7);
+    height: calc(var(--size) * .7);
+    margin: 0 auto;
+    background-color: #fff;
+    transform: translateY(-50%);
+    border-radius: 50%;
+    box-shadow: inset 0 var(--shadow) #ffbeb8;
+    transition: 0.2s ease width, 0.2s ease height;
+  }
+
+  .checkbox-wrapper-26 label:hover:before {
+    width: calc(var(--size) * .55);
+    height: calc(var(--size) * .55);
+    box-shadow: inset 0 var(--shadow) #ff9d96;
+  }
+
+  .checkbox-wrapper-26 label:active {
+    transform: scale(0.9);
+  }
+
+  .checkbox-wrapper-26 .tick_mark {
+    position: absolute;
+    top: -1px;
+    right: 0;
+    left: calc(var(--size) * -.05);
+    width: calc(var(--size) * .6);
+    height: calc(var(--size) * .6);
+    margin: 0 auto;
+    margin-left: calc(var(--size) * .14);
+    transform: rotateZ(-40deg);
+  }
+
+  .checkbox-wrapper-26 .tick_mark:before,
+  .checkbox-wrapper-26 .tick_mark:after {
+    content: "";
+    position: absolute;
+    background-color: #fff;
+    border-radius: 2px;
+    opacity: 0;
+    transition: 0.2s ease transform, 0.2s ease opacity;
+  }
+
+  .checkbox-wrapper-26 .tick_mark:before {
+    left: 0;
+    bottom: 0;
+    width: calc(var(--size) * .1);
+    height: calc(var(--size) * .3);
+    box-shadow: -2px 0 5px rgba(0, 0, 0, 0.23);
+    transform: translateY(calc(var(--size) * -.68));
+  }
+
+  .checkbox-wrapper-26 .tick_mark:after {
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: calc(var(--size) * .1);
+    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.23);
+    transform: translateX(calc(var(--size) * .78));
+  }
+
+  .checkbox-wrapper-26 input[type="checkbox"]:checked + label {
+    background-color: #07d410;
+    box-shadow: 0 var(--shadow) #92ff97;
+  }
+
+  .checkbox-wrapper-26 input[type="checkbox"]:checked + label:before {
+    width: 0;
+    height: 0;
+  }
+
+  .checkbox-wrapper-26 input[type="checkbox"]:checked + label .tick_mark:before,
+  .checkbox-wrapper-26 input[type="checkbox"]:checked + label .tick_mark:after {
+    transform: translate(0);
+    opacity: 1;
+  }
+</style>
+    
+</head>
+<body>     
+      <br/>
+      <div class="ui container">
+        <div class="ui grid">
+          <div class="ui sixteen column">
+            <div id="calendar"></div>
+          </div>
+        </div>
+      </div>
+      
+      </div>
+
+
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js">
+
+            </script>
+                        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.17.1/moment.min.js">
+
+                        </script>
+                                                <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.1.0/fullcalendar.min.js">
+
+                                                </script>
+                                                      <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.7/semantic.min.js">
+
+                                                      </script>
+                                                 <script src="./script.js">
+
+                                                 </script>
+                                                 <script>
+                                                    
+                                                    document.addEventListener("DOMContentLoaded", (event) => {
+                                                        setTimeout(() => {
+                                                            const tds = document.getElementsByTagName('td');
+    const daysElements = Array(...tds).filter(el => Array(...el.classList).includes('fc-day'));
+    daysElements.forEach((el,index) => {
+        const div = document.createElement('div');
+        div.setAttribute('class','checkbox-wrapper-26');
+        div.innerHTML = `
+  <input type="checkbox" id="_checkbox-${index}" ${Array(...el.classList).includes('fc-past') === true ? 'checked=true' : ''}>
+  <label for="_checkbox-${index}">
+    <div class="tick_mark"></div>
+  </label>
+`;
+        const ch = document.createElement('input');
+ch.setAttribute('type','checkbox');
+ch.setAttribute('class','fc-day-checkbox');
+if(Array(...el.classList).includes('fc-past')) {
+    ch.setAttribute('checked',true);
+}
+
+el.append(div);
+                                                        }, 1000);
+
+                                                        
+
+    })
+  });
+                                                 </script>
+</body>
+</html>
+
+
+
+
+
